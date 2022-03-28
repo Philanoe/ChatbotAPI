@@ -13,8 +13,7 @@ ContextBasedQuestionAnsweringModel = None
 def Init():
     import pickle
     global ContextBasedQuestionAnsweringModel
-    from transformers import activations
-    FullPath = 'G:/Informatique/Intelligence Artificielle/unpackAI/Chatbot/GitHubManagedChatbot/Data/QA.sav'
+    FullPath = '/Data/QA.sav'
     ContextBasedQuestionAnsweringModel = pickle.load(open(FullPath,"rb"))
 
 def Classifier(Question):
@@ -33,10 +32,6 @@ def ContextBasedQuestionAnswering(Question, Context):
     return Answer
 
 def QuestionAnswering(Question):
-    
-    #Label = Classifier(Question)
-    #Context = LoadContext(Label)
-    #Answer = ContextBasedQuestionAnswering(Question, Context)
     
     Context = "Ubuntu is very good"
     global ContextBasedQuestionAnsweringModel

@@ -25,6 +25,6 @@ def EmptyQuestion():
 @app.get("/question/{question_from_frontend}")
 def GET_Model_Question_Answering2(question_from_frontend):
     question = question_from_frontend
-    #answer = f'Your question {question_from_frontend} was quite interesting !'
-    answer = Chatbot.QuestionAnswering(question)
+    answer = f'Your question {question_from_frontend} was quite interesting !'
+    #answer = Chatbot.QuestionAnswering(question)
     return {"question" : question, "answer" : answer}
