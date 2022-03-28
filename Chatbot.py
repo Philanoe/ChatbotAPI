@@ -8,13 +8,22 @@ Functions for the Multi-context question answering chatbot
 """
 
 # prepare a global variable for the model
-ContextBasedQuestionAnsweringModel = None
+ContextBasedQuestionAnswerer = None
+#InitStatus = False
 
 def Init():
-    import pickle
-    global ContextBasedQuestionAnsweringModel
-    FullPath = '/Data/QA.sav'
-    ContextBasedQuestionAnsweringModel = pickle.load(open(FullPath,"rb"))
+    global ContextBasedQuestionAnswerer
+#    FullPath = '/Data/QA.sav'
+#    import pickle
+#    try:
+#        ContextBasedQuestionAnswerer = pickle.load(open(FullPath,"rb"))
+#        InitStatus = True
+#         pass
+#    except Exception:
+#        InitStatus = False
+#        pass        
+#       
+#    return InitStatus
 
 def Classifier(Question):
     
@@ -34,8 +43,9 @@ def ContextBasedQuestionAnswering(Question, Context):
 def QuestionAnswering(Question):
     
     Context = "Ubuntu is very good"
-    global ContextBasedQuestionAnsweringModel
-    answer = ContextBasedQuestionAnsweringModel.predict(Question,Context)
+    global ContextBasedQuestionAnswerer
+    answer = "default answer"
+    #answer = ContextBasedQuestionAnswerer.predict(Question,Context)
     answer = f'Your question {Question} was quite interesting, the answer is {answer} !'
     
     return answer
