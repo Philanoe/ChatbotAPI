@@ -32,8 +32,7 @@ def GET_Model_Question_Answering2(question_from_frontend):
 
 @app.get("/classifier/{question_from_frontend}")
 def QuestionClassifier(question_from_frontend):
-    #label = mychat.Classifier(question)
-    label = 0
+    label = mychat.Classifier(question_from_frontend)
     return {"question" : question_from_frontend, "label" : label}
 
 @app.get("/Diagnosis/")

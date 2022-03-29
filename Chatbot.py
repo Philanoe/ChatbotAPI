@@ -7,12 +7,11 @@ Created on Mon Mar 21 22:01:26 2022
 Functions for the Multi-context question answering chatbot
 """
 
-import pickle
 import os
 import pandas as pd
 import datasets
 from transformers import Trainer, AutoModelForSequenceClassification, AutoTokenizer
-from transformers import DataCollatorWithPadding, TrainingArguments
+from transformers import DataCollatorWithPadding, TrainingArguments, pipeline
 
 class chatbot:
 
@@ -21,6 +20,7 @@ class chatbot:
         
         self.Error = None
         self.Message = "no message"
+        self.label = 43
         
         try:
 
@@ -64,15 +64,14 @@ class chatbot:
             Context based Initialization
             ------------------------------
             """
-            ##    FullPath = '/Data/QA.sav'
-            ##        ContextBasedQuestionAnswerer = pickle.load(open(FullPath,"rb"))
-            #
-            #
+            PipelinePath = './Data/Pipeline'
+            self.ContextBasedQuestionAnswerer = pipeline("question-answering", model = PipelinePath, tokenizer = PipelinePath)
             self.Message = "Initialization completed"
             pass
         except Exception:
             self.Error = Exception
             pass
+    
             
     def preprocess_function(self, Question):
         return self.IntentTokenizer(Question["sentence"], truncation=True, padding=True)
@@ -83,7 +82,6 @@ class chatbot:
     
         use : Tokenizer, Model
         """
-
         # here, we are keeping the input as a Dataset, which could allow us to reuse the code
         # to answer many questions at once
         QuestionDFData = {'sentence' : [Question]}
@@ -96,18 +94,13 @@ class chatbot:
         
         #IndexToLabel = {0:"Software Recommendation",1:"Make Update",2:"Shutdown Computer",3:"Setup Printer"}
         #OutputLabelName = IndexToLabel[BestLabel[0]]
+        return str(BestLabel[0])
         
-        return BestLabel
-
-    def LoadContext(self,Label):
-        if(Label == "sldkfjsfd"):
-            self.Context = "sdfsdf"
-        elif(Label == "sldkfjsfd"):
-            self.Context == "sdfsdfx"
-
-    def ContextBasedQuestionAnswerer(self, Question):
-        Answer = "sdfsdf"
-        return Answer
+    #def LoadContext(self):
+    #    if(Label == "sldkfjsfd"):
+    #        self.Context = "sdfsdf"
+    #    elif(Label == "sldkfjsfd"):
+    #        self.Context == "sdfsdfx"
 
     def QuestionAnswering(self, Question):
     
