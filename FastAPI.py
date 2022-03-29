@@ -31,4 +31,4 @@ def GET_Model_Question_Answering2(question_from_frontend):
 
 @app.get("/Diagnosis/")
 def Diagnosis():
-    return {f'chatbot class status : {str(mychat.InitStatus)}'}
+    return {f'chatbot message : {str(mychat.Message)}  chatbot error : {str(mychat.Error)}'}
