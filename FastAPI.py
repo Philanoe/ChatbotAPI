@@ -22,12 +22,19 @@ def EmptyQuestion():
     answer = "Empty Question !"
     return {"question" : "", "answer" : answer}
 
+
 @app.get("/question/{question_from_frontend}")
 def GET_Model_Question_Answering2(question_from_frontend):
-    question = question_from_frontend
     #answer = Chatbot.QuestionAnswering(Model, question)
     answer = "default answer"
-    return {"question" : question, "answer" : answer}
+    return {"question" : question_from_frontend, "answer" : answer}
+
+
+@app.get("/classifier/{question_from_frontend}")
+def QuestionClassifier(question_from_frontend):
+    #label = mychat.Classifier(question)
+    label = 0
+    return {"question" : question_from_frontend, "label" : label}
 
 @app.get("/Diagnosis/")
 def Diagnosis():

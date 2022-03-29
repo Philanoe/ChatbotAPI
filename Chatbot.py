@@ -36,34 +36,34 @@ class chatbot:
             ModelPath = "./Data/"
             TokenizerPath = "./Data/"
             
-            #IntentClassifier = AutoModelForSequenceClassification.from_pretrained(ModelPath,num_labels=4)
-            #self.IntentTokenizer = AutoTokenizer.from_pretrained(TokenizerPath)
-            #data_collator = DataCollatorWithPadding(tokenizer=self.IntentTokenizer)
-            #training_args = TrainingArguments(
-            #    output_dir="./results",
-            #    learning_rate=2e-5,
-            #    per_device_train_batch_size=8,
-            #    per_device_eval_batch_size=8,
-            #    num_train_epochs=7,
-            #    weight_decay=0.01,
-            #    #evaluation_strategy="epoch"
-            #)
-            #
-            #self.trainer = Trainer(
-            #    model=IntentClassifier,
-            #    args=training_args,
-            #    train_dataset=None,
-            #    #eval_dataset=tokenize_test,  Here, we work with the entire dataset as training data
-            #    #compute_metrics=compute_metrics,
-            #    tokenizer=self.IntentTokenizer,
-            #    data_collator=data_collator,
-            #)
-            #
-            #"""
-            #------------------------------
-            #Context based Initialization
-            #------------------------------
-            #"""
+            IntentClassifier = AutoModelForSequenceClassification.from_pretrained(ModelPath,num_labels=4)
+            self.IntentTokenizer = AutoTokenizer.from_pretrained(TokenizerPath)
+            data_collator = DataCollatorWithPadding(tokenizer=self.IntentTokenizer)
+            training_args = TrainingArguments(
+                output_dir="./results",
+                learning_rate=2e-5,
+                per_device_train_batch_size=8,
+                per_device_eval_batch_size=8,
+                num_train_epochs=7,
+                weight_decay=0.01,
+                #evaluation_strategy="epoch"
+            )
+            
+            self.trainer = Trainer(
+                model=IntentClassifier,
+                args=training_args,
+                train_dataset=None,
+                #eval_dataset=tokenize_test,  Here, we work with the entire dataset as training data
+                #compute_metrics=compute_metrics,
+                tokenizer=self.IntentTokenizer,
+                data_collator=data_collator,
+            )
+            
+            """
+            ------------------------------
+            Context based Initialization
+            ------------------------------
+            """
             ##    FullPath = '/Data/QA.sav'
             ##        ContextBasedQuestionAnswerer = pickle.load(open(FullPath,"rb"))
             #
@@ -73,7 +73,6 @@ class chatbot:
         except Exception:
             self.Error = Exception
             pass
-            
             
     def preprocess_function(self, Question):
         return self.IntentTokenizer(Question["sentence"], truncation=True, padding=True)
@@ -95,10 +94,10 @@ class chatbot:
         LabelScores =self.trainer.predict(Tokenised_Question)
         BestLabel = LabelScores.predictions.argmax(1)
         
-        IndexToLabel = {0:"Software Recommendation",1:"Make Update",2:"Shutdown Computer",3:"Setup Printer"}
-        OutputLabelName = IndexToLabel[BestLabel[0]]
+        #IndexToLabel = {0:"Software Recommendation",1:"Make Update",2:"Shutdown Computer",3:"Setup Printer"}
+        #OutputLabelName = IndexToLabel[BestLabel[0]]
         
-        return OutputLabelName
+        return BestLabel
 
     def LoadContext(self,Label):
         if(Label == "sldkfjsfd"):
@@ -106,17 +105,21 @@ class chatbot:
         elif(Label == "sldkfjsfd"):
             self.Context == "sdfsdfx"
 
-    def ContextBasedQuestionAnswering(self, Question):
+    def ContextBasedQuestionAnswerer(self, Question):
         Answer = "sdfsdf"
         return Answer
 
     def QuestionAnswering(self, Question):
     
         Context = "Ubuntu is very good"
-        answer = "default answer"
-        #answer = ContextBasedQuestionAnswerer.predict(Question,Context)
-        answer = f'Your question {Question} was quite interesting, the answer is {answer} !'
-    
+        
+        try:
+            answer = self.ContextBasedQuestionAnswerer.predict(Question,Context)
+            pass
+        except Exception:
+            answer = f'Your question {Question} was quite interesting, unfortunately, an error occured'
+            pass
+            
         return answer
 
 
