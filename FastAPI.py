@@ -7,10 +7,10 @@ Created on Mon Mar 21 22:01:26 2022
 Functions for the Multi-context question answering chatbot
 """
 from fastapi import FastAPI
-#import Chatbot
+import Chatbot
 
 app = FastAPI()
-#Chatbot.Init()
+mychat = Chatbot.chatbot()
 
 @app.get("/")
 # use async when you do not need to wait for any answer to run the code
@@ -28,3 +28,7 @@ def GET_Model_Question_Answering2(question_from_frontend):
     #answer = Chatbot.QuestionAnswering(Model, question)
     answer = "default answer"
     return {"question" : question, "answer" : answer}
+
+@app.get("/Diagnosis/")
+def Diagnosis():
+    return {f'chatbot class status : {str(mychat.InitStatus)}'}
