@@ -14,7 +14,6 @@ from transformers import Trainer, AutoModelForSequenceClassification, AutoTokeni
 from transformers import DataCollatorWithPadding, TrainingArguments, pipeline
 
 class chatbot:
-
   
     def __init__(self):
         
