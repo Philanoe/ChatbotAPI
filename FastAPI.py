@@ -22,11 +22,17 @@ def EmptyQuestion():
     answer = "Empty Question !"
     return {"question" : "", "answer" : answer}
 
-
 @app.get("/question/{question_from_frontend}")
-def GET_Model_Question_Answering2(question_from_frontend):
-    #answer = Chatbot.QuestionAnswering(Model, question)
-    answer = "default answer"
+def GET_Model_Question_Answering(question_from_frontend):
+    
+    try:
+        mychat.Classifier(question_from_frontend)
+        mychat.UpdateContext()
+        answer = mychat.QuestionAnswerer(question_from_frontend)
+        pass
+    except Exception:
+        answer = "model answering problem"
+    
     return {"question" : question_from_frontend, "answer" : answer}
 
 

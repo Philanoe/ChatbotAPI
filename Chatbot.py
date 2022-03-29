@@ -89,30 +89,29 @@ class chatbot:
         QuestionDataset = datasets.Dataset.from_pandas(QuestionDataFrame)
         Tokenised_Question = QuestionDataset.map(self.preprocess_function,batched=False)
         
-        LabelScores =self.trainer.predict(Tokenised_Question)
-        BestLabel = LabelScores.predictions.argmax(1)
+        labelScores =self.trainer.predict(Tokenised_Question)
+        Bestlabel = labelScores.predictions.argmax(1)
         
-        #IndexToLabel = {0:"Software Recommendation",1:"Make Update",2:"Shutdown Computer",3:"Setup Printer"}
-        #OutputLabelName = IndexToLabel[BestLabel[0]]
-        return str(BestLabel[0])
+        #IndexTolabel = {0:"Software Recommendation",1:"Make Update",2:"Shutdown Computer",3:"Setup Printer"}
+        #OutputlabelName = IndexTolabel[Bestlabel[0]]
+        self.label = Bestlabel[0]
         
-    #def LoadContext(self):
-    #    if(Label == "sldkfjsfd"):
-    #        self.Context = "sdfsdf"
-    #    elif(Label == "sldkfjsfd"):
-    #        self.Context == "sdfsdfx"
+        return self.label
+        
+    def UpdateContext(self):
+        if(self.label == 0):
+            self.Context = "blablabla"
+        elif(self.label == 1):
+            self.Context == "bliiblibliblisdfsdfx"
+        elif(self.label == 2):
+            self.Context == "hihihihih"
+        elif(self.label == 3):
+            self.Context == "hohoho"
 
-    def QuestionAnswering(self, Question):
+    def QuestionAnswerer(self, Question):
     
-        Context = "Ubuntu is very good"
+        answer = self.ContextBasedQuestionAnswerer(Question, self.Context)           
         
-        try:
-            answer = self.ContextBasedQuestionAnswerer.predict(Question,Context)
-            pass
-        except Exception:
-            answer = f'Your question {Question} was quite interesting, unfortunately, an error occured'
-            pass
-            
         return answer
 
 
