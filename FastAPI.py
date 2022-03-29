@@ -28,7 +28,7 @@ def GET_Model_Question_Answering(question_from_frontend):
     try:
         mychat.Classifier(question_from_frontend)
         mychat.UpdateContext()
-        answer = mychat.QuestionAnswerer(question_from_frontend)
+        answer = mychat.QuestionAnswerer(question_from_frontend)['answer']
         pass
     except Exception:
         answer = "model answering problem"
